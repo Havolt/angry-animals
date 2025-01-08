@@ -18,3 +18,7 @@ position = Vector2(115, 363)
 [node name="Water" parent="." instance=ExtResource("2_58xo7")]
 z_index = 1
 position = Vector2(13, 573)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
