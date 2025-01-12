@@ -33,9 +33,9 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "DEBUG"
 
 [node name="Arrow" type="Sprite2D" parent="."]
-position = Vector2(50, 0)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_7fr0l")
+offset = Vector2(150, 0)
 
 [node name="StretchSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_vc1a3")
