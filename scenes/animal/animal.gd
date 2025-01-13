@@ -12,6 +12,7 @@ var _drag_start: Vector2 = Vector2.ZERO
 var _dragged_vector: Vector2 = Vector2.ZERO
 var _last_dragged_vector: Vector2 = Vector2.ZERO
 var _arrow_scale_x: float = 0.0
+var _last_collision_count: int = 0
 
 var _state: ANIMAL_STATE = ANIMAL_STATE.READY
 
@@ -20,6 +21,7 @@ var _state: ANIMAL_STATE = ANIMAL_STATE.READY
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
 @onready var arrow: Sprite2D = $Arrow
 @onready var launch_sound: AudioStreamPlayer2D = $LaunchSound
+@onready var kick_sound: AudioStreamPlayer2D = $KickSound
 
 
 # Called when the node enters the scene tree for the first time.
@@ -104,10 +106,22 @@ func update_drag() -> void:
 	drag_in_limits()
 	scale_arrow()
 
+func play_collision() -> void:
+	if ( _last_collision_count == 0 and
+		get_contact_count() > 0 and
+		!kick_sound.playing):
+		kick_sound.play()
+	_last_collision_count = get_contact_count()
+
+func update_flight() -> void: 
+	play_collision()
+
 func update(delta: float) -> void:
 	match _state:
 		ANIMAL_STATE.DRAG:
 			update_drag()
+		ANIMAL_STATE.RELEASE:
+			update_flight()
 
 func die() -> void:
 	SignalManager.on_animal_died.emit()
